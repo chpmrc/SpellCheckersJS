@@ -12,12 +12,14 @@
  * @param {number} mp
  * @param {Phaser.sprite} [sprite]
  */
-var Mage = function(hp, mp, sprite, cursors, initialRotation) {
+var Mage = function(hp, mp, sprite, cursors, initialRotation, bullets, game) {
     this.hp = hp;
     this.mp = mp;
     this.sprite = sprite;
     this.cursors = cursors;
     this.initialRotation = initialRotation || 0;
+    this.bullets = bullets;
+    this.game = game;
 }
 
 /**
@@ -37,6 +39,11 @@ Mage.prototype.update = function(otherMage) {
     this.checkInput(otherMage);
 }
 
+/**
+ * Check what input events have been triggered
+ * and execute the corresponding action.
+ * @param {Mage} otherMage
+ */
 Mage.prototype.checkInput = function(otherMage) {
     var mageSprite = this.sprite,
         otherMageSprite = otherMage.sprite,
@@ -45,7 +52,8 @@ Mage.prototype.checkInput = function(otherMage) {
     //  Reset the mageSprites velocity (movement)
     mageSprite.body.velocity.x = 0;
     mageSprite.body.velocity.y = 0;
-    mageSprite.rotation = this.initialRotation + game.physics.arcade.moveToObject(mageSprite, otherMageSprite, 0); // TODO understand why the default rotation is -90 degrees
+    mageSprite.rotation = this.initialRotation + game.physics.arcade.moveToObject
+                                                (mageSprite, otherMageSprite, 0); // TODO understand why the default rotation is -90 degrees
 
     if (cursors) {
         if (cursors.left.isDown)
@@ -72,6 +80,19 @@ Mage.prototype.checkInput = function(otherMage) {
             mageSprite.body.velocity.y = 150;
 
         }
+        if (game.input.activePointer.isDown)
+        {
+            //  Boom!
+            this.castSpell(otherMage);
+        }
     }
 
+
+
+}
+
+Mage.prototype.castSpell = function(otherMage) {
+    var bullet = bullets.getFirstExists(false);
+    bullet.reset(this.sprite.x, this.sprite.y - 20);
+    bullet.rotation = this.game.physics.arcade.moveToObject(bullet, otherMage.sprite, 100);
 }

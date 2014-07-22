@@ -8,19 +8,21 @@ var localMage,
     remoteMage,
     localPlayerSprite,
     remotePlayerSprite,
-    cursors;
+    cursors,
+    bullets;
 
 function preload() {
 
     game.load.image('ground', 'assets/arena.jpg');
     game.load.spritesheet('mage', 'assets/mage.png');
+    game.load.image('bullet', 'assets/bullet.png');
 
 }
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    game.add.sprite(0, 0, 'ground');
+    // game.add.sprite(0, 0, 'ground');
 
     localPlayerSprite = game.add.sprite(game.world.width / 2, game.world.height * (3 / 4), 'mage');
     remotePlayerSprite = game.add.sprite(game.world.width / 2, game.world.height * (1 / 4), 'mage');
@@ -40,13 +42,24 @@ function create() {
 
     cursors = game.input.keyboard.createCursorKeys();
 
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(30, 'bullet', 0, false);
+    bullets.setAll('anchor.x', 0.5);
+    bullets.setAll('anchor.y', 0.5);
+    bullets.setAll('outOfBoundsKill', true);
+    bullets.setAll('checkWorldBounds', true);
+
     // Create mages
-    localMage = new Mage(100, 100, localPlayerSprite, cursors, Math.PI/2.0);
-    remoteMage = new Mage(100, 100, remotePlayerSprite, null, -Math.PI/2.0); // Controlled by net (TODO)
+    localMage = new Mage(100, 100, localPlayerSprite, cursors, Math.PI/2.0, bullets, game);
+    remoteMage = new Mage(100, 100, remotePlayerSprite, null, -Math.PI/2.0, bullets, game); // Controlled by net (TODO)
+
+
+
 }
 
 function update() {
-
     localMage.update(remoteMage);
     remoteMage.update(localMage);
 }
