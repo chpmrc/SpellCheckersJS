@@ -9,8 +9,22 @@
  * @param {Mage} mage The mage that owns this library
  */
 var SpellLibrary = function(mage) {
+    var game = mage.game;
     this.buffer = ''; // Let's just use a string
     this.mage = mage;
+    // Let's create the structure for the spells' sprites
+    this.spellSprites = {};
+    // Build the spells' sprites
+    for (var spell in SpellLibrary.spells) {
+        this.spellSprites[spell] = game.add.group();
+        this.spellSprites[spell].enableBody = true;
+        this.spellSprites[spell].physicsBodyType = Phaser.Physics.ARCADE;
+        this.spellSprites[spell].createMultiple(30, spell, 0, false);
+        this.spellSprites[spell].setAll('anchor.x', 0.5);
+        this.spellSprites[spell].setAll('anchor.y', 0.5);
+        this.spellSprites[spell].setAll('outOfBoundsKill', true);
+        this.spellSprites[spell].setAll('checkWorldBounds', true);
+    }
 };
 
 /**
@@ -41,8 +55,18 @@ SpellLibrary.prototype.resetBuffer = function() {
  * @param  {string} spellName The name of the spell
  */
 SpellLibrary.prototype.cast = function(spellName) {
-    // TODO
-    console.log('Casting ' + spellName);
+    var mage = this.mage,
+        opponentMage = this.mage.opponent,
+        game = mage.game,
+        spellSprite;
+
+    console.log(mage, opponentMage);
+    // Pick a sprite from the spell's sprites pool and move it around
+    spellSprite = this.spellSprites[spellName].getFirstExists(false);
+    spellSprite.reset(mage.sprite.x, mage.sprite.y);
+    spellSprite.rotation = game.physics.arcade.moveToObject(
+                                spellSprite, opponentMage.sprite, 100);
+    console.log(this.spellSprites);
 };
 
 /**

@@ -10,7 +10,7 @@ var localMage,
 function preload() {
     Mage.loadSpritesheet('mage', game);
     game.load.image('ground', 'assets/arena.jpg');
-    game.load.image('bullet', 'assets/bullet.png');
+    game.load.image('fire', 'assets/fire.png');
 }
 
 function create() {
@@ -22,6 +22,8 @@ function create() {
     // Create mages
     localMage = new Mage(100, 100, game, true);
     remoteMage = new Mage(100, 100, game, false);
+    localMage.setOpponent(remoteMage);
+    remoteMage.setOpponent(localMage);
 
 }
 
