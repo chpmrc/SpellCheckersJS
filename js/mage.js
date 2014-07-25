@@ -26,7 +26,7 @@ var Mage = function(hp, mp, game, localPlayer) {
                     game.world.width / 2,
                     0,
                     'mage');
-    this.spellLibrary = new SpellLibrary(this);
+    this.spellLibrary = new SpellLibrary(this, game);
     game.physics.arcade.enable(this.sprite);
     // TODO Pack the common settings together
     if (localPlayer) { // This mage is the local player controlled by the keyboard
@@ -65,7 +65,6 @@ Mage.prototype.chargeSpell = function(evt) {
             this.spellLibrary.resetBuffer();
             break;
         default:
-            console.log(keyCode);
             if (keyCode >= 65 && keyCode <= 90) {
                 char = String.fromCharCode(keyCode).toLowerCase();
                 this.spellLibrary.addToBuffer(char);
@@ -80,6 +79,7 @@ Mage.prototype.chargeSpell = function(evt) {
  */
 Mage.prototype.update = function() {
     this.move();
+    this.spellLibrary.checkCollisions();
 }
 
 
