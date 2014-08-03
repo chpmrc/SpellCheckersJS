@@ -1,6 +1,6 @@
-# Duel Cast
+# SpellCheckersJS
 
-Duel Cast is a duel between two mages in an arena. Each player can only change his mage's appearances but no numeric value determines whether a mage is "stronger" or "weaker" than another one. That is, Duel Cast is a bit like chess: it's solely based on the players' skills.
+SpellCheckersJS is a duel between two mages in an arena. Each player can only change his mage's appearances but no numeric value determines whether a mage is "stronger" or "weaker" than another one. That is, SpellCheckersJS is a bit like chess: it's solely based on the players' skills.
 
 Each mage has access to a potentially infinite array of spells. Each spell is linked to its own name.
 
@@ -18,7 +18,7 @@ While moving each player constantly faces the opponent so that aiming is automat
 
 ### Casting a spell
 
-Here's how Duel Cast is different than other similar games (e.g. Magicka). To cast a spell the player has to type the word linked to that particular spell. An example might be _fireball_ that throws a ball of fire to the opponent.
+Here's how SpellCheckersJS is different than other similar games (e.g. Magicka). To cast a spell the player has to type the word linked to that particular spell. An example might be _fireball_ that throws a ball of fire to the opponent.
 
 This follows the definition of "spell". From Wikipedia:
 
@@ -42,3 +42,6 @@ Each spell has different charateristics and a damages the player in different wa
 ## End of the duel
 
 The duel simply ends when one of the players loses all of his HP (health points).
+
+# Notes
+This game was originally prototyped in C++ using OpenGL. Please see _SpellCheckers_.
