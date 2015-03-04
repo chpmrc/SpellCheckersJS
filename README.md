@@ -42,6 +42,3 @@ Each spell has different charateristics and a damages the player in different wa
 ## End of the duel
 
 The duel simply ends when one of the players loses all of his HP (health points).
-
-# Notes
-This game was originally prototyped in C++ using OpenGL. Please see _SpellCheckers_.
