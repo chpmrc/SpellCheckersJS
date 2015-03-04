@@ -30,10 +30,6 @@ Each spell has different charateristics and a damages the player in different wa
 
 #### Spells
 
-| Name | Damage | Effects | Cost
-| :------------- | :------------- | :-------------
-| Fireball       | 10 HP       | None | 10 MP
-
 ##### Fireball
 *    **Name**: fireball
 *    **Damage**: 10 HP
